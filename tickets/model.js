@@ -15,6 +15,9 @@ const Ticket = db.define('ticket', {
   image: {
     type: Sequelize.STRING,
     allowNull: true
+  },
+  risk: {
+    type: Sequelize.INTEGER
   }
 });
 
