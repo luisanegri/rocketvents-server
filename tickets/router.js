@@ -26,17 +26,16 @@ router.get('/event/:eventId/ticket', (req, res, next) => {
 // implement risk algorithm
 router.get('/ticket/:ticketId', async (req, res, next) => {
   try {
-    console.log(req.body, 'req');
+    // console.log(req.body, 'req');
     const ticketDetail = await Ticket.findOne({
       where: { id: req.params.ticketId }
     });
-    console.log('ticketDetail', ticketDetail.dataValues);
-    // console.log(bla, 'bla');
-    const userTickets = await Ticket.findOne({
-      where: { user: ticket.userId }
+    // console.log('ticketDetail', ticketDetail.dataValues);
+    const userTickets = await Ticket.findAll({
+      where: { user: req.ticket.userId }
     });
     console.log('userTickets', userTickets);
-    res.send(ticketDetail.dataValues);
+    res.send(userTickets.dataValues);
   } catch {}
 });
 // count tickets for user
