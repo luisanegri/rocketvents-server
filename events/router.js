@@ -11,8 +11,10 @@ router.post('/event', auth, (req, res, next) => {
 });
 
 router.get('/event', (req, res, next) => {
-  Event.findAll({ include: [Ticket] })
-    .then(event => res.send(event))
+  const limit = req.query.limit || 9;
+  const offset = req.query.offset || 0;
+  Event.findAndCountAll({ limit, offset, include: [Ticket] })
+    .then(event => res.send({ events: event.rows, total: event.count }))
     .catch(error => next(error));
 });
 
