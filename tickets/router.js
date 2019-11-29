@@ -24,19 +24,52 @@ router.get('/event/:eventId/ticket', (req, res, next) => {
 
 // get single ticket
 // implement risk algorithm
-router.get('/ticket/:ticketId', (req, res, next) => {
-  Ticket.findOne({
-    where: { id: req.params.ticketId }
-  })
-    .then(ticket => {
-      if (!ticket) {
-        res.status(404).end();
-      } else {
-        res.status(201).json(ticket);
-      }
-    })
-    .catch(error => next(error));
+router.get('/ticket/:ticketId', async (req, res, next) => {
+  try {
+    console.log(req.body, 'req');
+    const ticketDetail = await Ticket.findOne({
+      where: { id: req.params.ticketId }
+    });
+    console.log('ticketDetail', ticketDetail.dataValues);
+    // console.log(bla, 'bla');
+    const userTickets = await Ticket.findOne({
+      where: { user: ticket.userId }
+    });
+    console.log('userTickets', userTickets);
+    res.send(ticketDetail.dataValues);
+  } catch {}
 });
+// count tickets for user
+// const countUserTickets = userTickets.length;
+// // if user has only one ticket add 10 of risk
+// if (countUserTickets === 1) {
+//   risk.ticket += 10;
+// }
+// find tickets of specific event
+// const eventTickets = Ticket.find({ where: { event: ticket.eventId } });
+// map price of all events tickets
+// const eventTicketsPrice = eventTickets.map(ticket => ticket.price);
+// find amount of tickets
+// const countEventTickets = eventTicketsPrice.length;
+// calculate average
+// const avgTicketPrice =
+//   eventTicketsPrice.reduce((a, b) => {
+//     return a + b;
+//   }, 0) / countEventTickets;
+
+// if (ticket.price < avgTicketPrice) {
+//   const difference = ticket.price - avgTicketPrice;
+//   const diffPercentage = (difference / avgTicketPrice) * 100;
+//   if (ticket.price < diffPercentage) {
+//     ticket.risk += diffPercentage;
+//   } else if (ticket.price > diffPercentage) {
+//     ticket.risk -= diffPercentage;
+//   }
+// }
+
+// return ticket;
+
+// res.status(201).json(ticket);
 
 router.put('/event/:eventId/ticket/:ticketId', auth, (req, res, next) => {
   Ticket.findByPk({
