@@ -8,7 +8,7 @@ const Event = db.define('event', {
     allowNull: false
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(12340),
     allowNull: false
   },
   image: {
