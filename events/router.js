@@ -3,6 +3,7 @@ const Event = require('./model');
 const router = new Router();
 const auth = require('../auth/middleware');
 
+// add auth back
 router.post('/event', (req, res, next) => {
   Event.create(req.body)
     .then(event => res.send(event))
