@@ -9,7 +9,7 @@ router.post('/event', (req, res, next) => {
     .catch(error => next(error));
 });
 
-router.get('/event', (req, res, next) => {
+router.get('/event', (_req, res, next) => {
   Event.findAll()
     .then(event => res.send(event))
     .catch(error => next(error));
@@ -34,7 +34,7 @@ router.put('/event/:eventId', (req, res, next) => {
     .catch(error => next(error));
 });
 
-router.delete('/event/:eventId', auth, (req, res, next) => {
+router.delete('/event/:eventId', (req, res, next) => {
   Event.destroy({ where: { id: req.params.eventId } })
     .then(number => res.send({ number }))
     .catch(error => next(error));
